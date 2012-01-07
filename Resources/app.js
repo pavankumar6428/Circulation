@@ -45,6 +45,8 @@ var getMemDt = Titanium.UI.createButton({
 	left:'10%',
 });
 
+
+
 getMemDt.addEventListener('click', getuserinfo);
 
 
@@ -139,7 +141,8 @@ function displayResults(responsedata)
 	//var listview = Ti.UI.createImageView({
 		
 	//});
-	
+	var i =0;
+	var tbl_data = [];
 	//getElementsByTagName("someTag");
    myNodes=responsedata.getElementsByTagName("rental");
    //Extract the different values using a loop.
@@ -154,12 +157,62 @@ function displayResults(responsedata)
 			
 			
 		    var titlename = mynextnodes1.item(0).getElementsByTagName("title").item(0).text;
-				alert(titlename);
+				//alert(titlename);
 			var isbn = mynextnodes1.item(0).getElementsByTagName("isbn").item(0).text;
-				alert(isbn);
+				//alert(isbn);
+				//images.push('http://cdn2.justbooksclc.com/medium/'+isbn+'.jpg');
+			
+				  var row = Ti.UI.createTableViewRow();
+				  var label = Ti.UI.createLabel({
+        			left: 10,
+        			text: 'Row ' + (i+1)
+    			});
+    			var image = Ti.UI.createImageView({
+        		url: 'http://cdn2.justbooksclc.com/medium/'+isbn+'.jpg'
+    			});
+    			var button = Ti.UI.createButton({
+        			right: 10,
+        			height: 30,
+        			width: 80,
+        			title: 'Return'
+   				});
+				  	row.add(label);
+    				row.add(image);
+    				row.add(button);
+    				tbl_data.push(row);
+			   
+			i++;
 		}       
 
    }
+   /*var img = Ti.UI.createImageView({
+    		//image:'http://cdn2.justbooksclc.com/medium/'+isbn+'.jpg',
+    		image:images,
+    		duration:100, // in milliseconds, the time before next frame is shown
+    		repeatCount:0,  // 0 means animation repeats indefinitely, use > 1 to control repeat count
+   
+    		/* logo@2x.png will be used automatically if it exists on iPhone 4 & iPad devices */
+    		/*width:'100%',
+			height:'50%',
+			top:'52%',
+			left:'10%',
+			});
+			firstpage.add(img);*/
+			
+			
+			
+			
+// now assign that array to the table's data property to add those objects as rows
+			var table = Titanium.UI.createTableView({
+    			data:tbl_data,
+    			width:'100%',
+				height:'50%',
+				top:'52%',
+				left:'10%',
+			});
+// alternatively, you could do
+		  //table.setData(tbl_data);
+		  firstpage.add(table)
 	
 	
 }
